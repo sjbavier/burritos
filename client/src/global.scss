@@ -14,6 +14,7 @@ $color: #0cf;
   position: relative;
   overflow: hidden;
   z-index: 1;
+  font-size: 2rem;
   cursor: pointer;
   border-color: darken($color, 15%);
   &:after {
