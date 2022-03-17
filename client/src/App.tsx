@@ -12,14 +12,17 @@ function App() {
   const [makingBurrito, setMakingBurrito] = useState(false)
   const [ingredients, setIngredients] = useState([
     { id: 1, name: 'refried beans', added: false },
-    { id: 2, name: 'blackbeans', added: false },
+    { id: 2, name: 'black beans', added: false },
     { id: 3, name: 'cheese', added: false },
     { id: 4, name: 'rice', added: false },
-    { id: 5, name: 'chili peppers', added: false },
-    { id: 6, name: 'tomatoes', added: false },
+    { id: 5, name: 'roasted peppers', added: false },
+    { id: 6, name: 'corn', added: false },
     { id: 7, name: 'salsa', added: false },
     { id: 8, name: 'onion', added: false },
-    { id: 9, name: 'sour cream', added: false }
+    { id: 9, name: 'sour cream', added: false },
+    { id: 10, name: 'chicken', added: false },
+    { id: 11, name: 'chorizo', added: false },
+    { id: 12, name: 'tofu', added: false }
   ])
 
   function resetBurrito(): void {

@@ -24,14 +24,7 @@ export const Burrito = (props: any): ReactElement => {
             >
 
             </List>
-            {/* <ul>
-          {
-            addedIngredients.map((item: Ingredient) => (
-              <li key={item.id}>{item.name}</li>
-            )
-            )
-          }
-        </ul> */}
+
         </div>
     )
 }
