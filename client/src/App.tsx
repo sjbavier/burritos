@@ -73,7 +73,7 @@ function App() {
         
         <div className='flex_wrapper' >
           {!makingBurrito && (
-            <Button onClick={() => setMakingBurrito(!makingBurrito)}>Create Burrito!</Button>
+            <button className='btn_launch_burrito' onClick={() => setMakingBurrito(!makingBurrito)}>Create Burrito!</button>
           )}
         </div>
 

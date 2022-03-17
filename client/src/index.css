@@ -51,11 +51,11 @@ code {
   justify-content: center;
   align-items: center;
   margin-bottom: 1rem;
+  flex-direction: row;
 }
 
-
 .ingredient_wrapper {
-  max-width: 35vw;
+  /* max-width: 35vw; */
   margin-right: 3rem;
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@ code {
 
 .burrito_wrapper {
   background:rgba(255,255,255, 0.73);
-  max-width: 35vw;
+  /* max-width: 35vw; */
   margin-right: 3rem;
   display: flex;
   flex-direction: column;
@@ -80,3 +80,15 @@ code {
   align-items: flex-start;
 }
 
+@media only screen and (max-width: 660px) {
+  .flex_wrapper {
+    flex-direction: column;
+  }
+  .ingredient_wrapper {
+    margin-right: 0;
+    margin-bottom: 2rem;
+  }
+  .burrito_wrapper {
+    margin-right: 0;
+  }
+}
