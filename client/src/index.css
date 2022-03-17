@@ -11,3 +11,68 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.layout_wrapper {
+  background: rgb(80,16,144);
+  background: linear-gradient(90deg, rgba(80,16,144,0.6460959383753502) 0%, rgba(80,16,152,0.604079131652661) 19%, rgba(0,212,255,0.6460959383753502) 100%);
+  min-height: 100vh;
+}
+
+.img_layer {
+  background: url('./img/burrito.png');
+  z-index: -1;
+  background-size: 50%;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  position:fixed;
+  top: 0;
+  left: 0;
+  animation: spin 30s linear infinite;
+}
+@-moz-keyframes spin { 
+  100% { -moz-transform: rotate(360deg); } 
+}
+@-webkit-keyframes spin { 
+  100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes spin { 
+  100% { 
+      -webkit-transform: rotate(360deg); 
+      transform:rotate(360deg); 
+  } 
+}
+
+.flex_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.ingredient_wrapper {
+  max-width: 35vw;
+  margin-right: 3rem;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.ingredient {
+  vertical-align: baseline;
+  margin-top: .4rem;
+  background: rgba(255,255,255, 0.7);
+  border-radius: .4rem;
+  padding: .7rem .7rem .25rem .7rem;
+}
+
+.burrito_wrapper {
+  background:rgba(255,255,255, 0.7);
+  max-width: 35vw;
+  margin-right: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

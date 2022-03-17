@@ -1,12 +1,11 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { Layout, Typography, Form, Checkbox, Radio, Button, Space } from 'antd';
-const { Title } = Typography
+import React, { useEffect, useState } from 'react';
+import { Layout, Typography, Button, Space } from 'antd';
+import { Burrito } from './components/Burrito';
+import { Ingredients } from './components/Ingredients';
+import { Ingredient } from './models/Ingredient';
 
-interface Ingredient {
-  id: number,
-  name: string,
-  added: boolean
-}
+
+const { Title } = Typography
 
 
 function App() {
@@ -23,44 +22,10 @@ function App() {
     { id: 9, name: 'sour cream', added: false }
   ])
 
-  return (
-    <div className='App'>
-      <Layout style={{ minHeight: '100vh' }}>
-        <Title>Burrito Maker 1000</Title>
-        {!makingBurrito && (<Button onClick={() => setMakingBurrito(!makingBurrito)}>Create Burrito!</Button>)}
-        {makingBurrito && (
-          <Ingredients ingredients={ingredients} setIngredients={setIngredients} />
-        )}
-        {makingBurrito && (
-          <Button onClick={() => setMakingBurrito(!makingBurrito)}>done with Burrito!</Button>
-        )} 
-      </Layout>
-
-    </div>
-  );
-}
-
-const Ingredients = (props: any): ReactElement => {
-
-
-  function addItem(e: number) {
-    props.setIngredients( props.ingredients.map((item: Ingredient) => {
-      if (item.id === e){
-        return Object.assign({}, item, {
-          id: item.id,
-          name: item.name,
-          added: true
-        })
-      }
-      else {
-        return item
-      }
-    }))
-  }
-
-  function removeItem(e: number) {
-    props.setIngredients( props.ingredients.map((item: Ingredient) => {
-      if (item.id === e){
+  function resetBurrito(): void {
+    setMakingBurrito(!makingBurrito)
+    setIngredients(ingredients.map((item: Ingredient) => {
+      if (item.added === true) {
         return Object.assign({}, item, {
           id: item.id,
           name: item.name,
@@ -72,27 +37,49 @@ const Ingredients = (props: any): ReactElement => {
       }
     }))
   }
-  
+
+  function submitBurrito() {
+
+  }
+
   return (
-    <>
-      {
-        props.ingredients.map((item: Ingredient): ReactElement =>
-        (
-          <div className='ingredient' key={item.id}>
-            <Title level={4}>{item.name}</Title>
-            <Space size={'small'}>
-              <Button disabled={item.added} onClick={() => addItem(item.id)} type={'primary'}>add</Button>
-              <Button disabled={!item.added} onClick={() => removeItem(item.id)} type={'dashed'}>delete</Button>
+    <div className='App'>
+      <Layout className='layout_wrapper'>
+        <div className='img_layer'/>
+        <Title style={{ textAlign: 'center', marginTop: '2rem' }}>Burrito Maker 3000</Title>
+        <div className='flex_wrapper' >
+          {!makingBurrito && (
+            <Button onClick={() => setMakingBurrito(!makingBurrito)}>Create Burrito!</Button>
+          )}
+        </div>
+        <div className='flex_wrapper' >
+          {makingBurrito && (
+            <div className='ingredient_wrapper'>
+              <Space size={'middle'} direction='vertical'>
+                <Ingredients ingredients={ingredients} setIngredients={setIngredients} />
+              </Space>
+            </div>
+          )}
+          {makingBurrito && (
+            <Burrito ingredients={ingredients} />
+          )}
+        </div>
+        <div className='flex_wrapper' >
+          {makingBurrito && (
+            <Space>
+              <Button onClick={submitBurrito} style={{ marginTop: '2rem' }} type={'primary'}>Make my burrito!</Button>
+              <Button onClick={resetBurrito} danger style={{ marginTop: '2rem' }} type={'primary'}>Cancel my burrito!</Button>
             </Space>
+          )}
+        </div>
 
-          </div>
-        )
-        )
-      }
-    </>
-  )
+      </Layout>
 
+    </div>
+  );
 }
+
+
 
 
 function Hello() {
