@@ -22,7 +22,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start && ../server/yarn run start",
+    "start": "react-scripts start",
     "build": "react-scripts build && rm -rf ../priv/build && mv ./build ../priv",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
