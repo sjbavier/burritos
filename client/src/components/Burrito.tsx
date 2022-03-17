@@ -7,8 +7,7 @@ const { Title } = Typography
 
 export const Burrito = (props: any): ReactElement => {
 
-    const addedIngredients: Ingredient[] = props.ingredients.filter((item: Ingredient) => item.added === true)
-
+    const addedIngredients: Ingredient[] = props.addedIngredients
     return (
         <div className='burrito_wrapper'>
 

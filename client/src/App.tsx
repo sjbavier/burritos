@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Typography, Button, Space } from 'antd';
+import { Layout, Typography, Button, Space, Alert, Spin } from 'antd';
 import { Burrito } from './components/Burrito';
 import { Ingredients } from './components/Ingredients';
-import { Ingredient } from './models/Ingredient';
+import { Ingredient, IngredientResponse } from './models/Ingredient';
+import { client } from './lib/client';
 
 
 const { Title } = Typography
@@ -10,23 +11,31 @@ const { Title } = Typography
 
 function App() {
   const [makingBurrito, setMakingBurrito] = useState(false)
-  const [ingredients, setIngredients] = useState([
-    { id: 1, name: 'refried beans', added: false },
-    { id: 2, name: 'black beans', added: false },
-    { id: 3, name: 'cheese', added: false },
-    { id: 4, name: 'rice', added: false },
-    { id: 5, name: 'roasted peppers', added: false },
-    { id: 6, name: 'corn', added: false },
-    { id: 7, name: 'salsa', added: false },
-    { id: 8, name: 'onion', added: false },
-    { id: 9, name: 'sour cream', added: false },
-    { id: 10, name: 'chicken', added: false },
-    { id: 11, name: 'chorizo', added: false },
-    { id: 12, name: 'tofu', added: false }
-  ])
+  const [ingredients, setIngredients] = useState<Ingredient[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [err, setErr] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [msg, setMsg] = useState('')
+  const addedIngredients: Ingredient[] = ingredients.filter((item: Ingredient) => item.added === true)
+
+  useEffect(() => {
+    let mounted = true
+    setIsLoading(true)
+    setErr('')
+
+    client.fetchMe<IngredientResponse>('GET', '/api/v1/ingredients')
+      .then((data) => mounted ? setIngredients(data.data) : null)
+      .catch(err => setErr(client.prettyError(err)))
+      .finally(() => setIsLoading(false))
+
+  }, []) // only run once
+
 
   function resetBurrito(): void {
     setMakingBurrito(!makingBurrito)
+    setErr('')
+    setMsg('')
+    // create new object instead of mutation
     setIngredients(ingredients.map((item: Ingredient) => {
       if (item.added === true) {
         return Object.assign({}, item, {
@@ -41,20 +50,33 @@ function App() {
     }))
   }
 
-  function submitBurrito() {
-
+  function submitBurrito(): void {
+    if (!isSubmitting) { // prevent resubmitting
+      setIsSubmitting(true)
+      setMsg('')
+      client.fetchMe<{ message: string }>('POST', '/api/v1/burrito', addedIngredients)
+        .then((response) => {
+          setErr('')
+          setMsg(response.message)
+        })
+        .catch(err => setErr(client.prettyError(err)))
+        .finally(() => setIsSubmitting(false))
+    }
   }
 
   return (
     <div className='App'>
       <Layout className='layout_wrapper'>
-        <div className='img_layer'/>
+        <div className='img_layer' />
+
         <Title style={{ textAlign: 'center', marginTop: '2rem' }}>Burrito Maker 3000</Title>
+        
         <div className='flex_wrapper' >
           {!makingBurrito && (
             <Button onClick={() => setMakingBurrito(!makingBurrito)}>Create Burrito!</Button>
           )}
         </div>
+
         <div className='flex_wrapper' >
           {makingBurrito && (
             <div className='ingredient_wrapper'>
@@ -64,9 +86,10 @@ function App() {
             </div>
           )}
           {makingBurrito && (
-            <Burrito ingredients={ingredients} />
+            <Burrito addedIngredients={addedIngredients} />
           )}
         </div>
+        
         <div className='flex_wrapper' >
           {makingBurrito && (
             <Space>
@@ -76,30 +99,33 @@ function App() {
           )}
         </div>
 
+        <Space direction={'vertical'}>
+        </Space>
+        <Space direction={'vertical'}>
+          {msg && (<Alert message={msg} type="success" />)}
+          {err && (<Alert message={err} type="error" />)}
+          {isLoading && (
+            <Spin tip="Loading...">
+              <Alert
+                description="Module is loading"
+                type="info"
+              />
+            </Spin>
+          )}
+          {isSubmitting && (
+            <Spin tip="Making Burritos!">
+              <Alert
+                description="Sending burrito info"
+                type="info"
+              />
+            </Spin>
+          )}
+        </Space>
+        
       </Layout>
-
     </div>
   );
 }
 
-
-
-
-function Hello() {
-  const [message, setMessage] = useState(null);
-  useEffect(() => {
-    fetch('/heading')
-      .then((x) => {
-        console.log({ x });
-        return x.json();
-      })
-      .then((x) => {
-        console.log({ x });
-        return setMessage(x.burritos);
-      });
-  }, [setMessage]);
-
-  return <div>Burritos. {message}</div>;
-}
 
 export default App;

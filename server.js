@@ -22,7 +22,8 @@ const ingredients = [
   ]
 
 server.post('/api/v1/burrito', function(req, res, next) {
-    console.log(req.body.data);
+    console.log(req.body);
+    res.json({message: 'Burrito Made!'})
 })
 server.get('/api/v1/ingredients', function(req, res, next) {
     res.json({data: ingredients});

@@ -4,3 +4,7 @@ export interface Ingredient {
     name: string,
     added: boolean
 }
+
+export interface IngredientResponse {
+    data: Ingredient[]
+}
