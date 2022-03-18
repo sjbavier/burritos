@@ -30,7 +30,7 @@ function App() {
 
     return () => {
       mounted = false
-    }
+    } // prevent memory leak
 
   }, []) // only run once
 
