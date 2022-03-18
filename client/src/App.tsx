@@ -28,6 +28,10 @@ function App() {
       .catch(err => setErr(client.prettyError(err)))
       .finally(() => setIsLoading(false))
 
+    return () => {
+      mounted = false
+    }
+
   }, []) // only run once
 
 
@@ -70,7 +74,7 @@ function App() {
         <div className='img_layer' />
 
         <Title style={{ textAlign: 'center', marginTop: '2rem' }}>Burrito Maker 3000</Title>
-        
+
         <div className='flex_wrapper' >
           {!makingBurrito && (
             <button className='btn_launch_burrito' onClick={() => setMakingBurrito(!makingBurrito)}>Create Burrito!</button>
@@ -89,7 +93,7 @@ function App() {
             <Burrito addedIngredients={addedIngredients} />
           )}
         </div>
-        
+
         <div className='flex_wrapper' >
           {makingBurrito && (
             <Space>
@@ -121,7 +125,7 @@ function App() {
             </Spin>
           )}
         </Space>
-        
+
       </Layout>
     </div>
   );
