@@ -30,7 +30,7 @@ function App() {
 
     return () => {
       mounted = false
-    } // prevent memory leak
+    } // prevent memory
 
   }, []) // only run once
 
@@ -105,27 +105,28 @@ function App() {
 
         <Space direction={'vertical'}>
         </Space>
-        <Space direction={'vertical'}>
-          {msg && (<Alert message={msg} type="success" />)}
-          {err && (<Alert message={err} type="error" />)}
-          {isLoading && (
-            <Spin tip="Loading...">
-              <Alert
-                description="Module is loading"
-                type="info"
-              />
-            </Spin>
-          )}
-          {isSubmitting && (
-            <Spin tip="Making Burritos!">
-              <Alert
-                description="Sending burrito info"
-                type="info"
-              />
-            </Spin>
-          )}
-        </Space>
-
+        <div className='flex_wrapper' >
+          <Space direction={'vertical'}>
+            {msg && (<Alert message={msg} type="success" />)}
+            {err && (<Alert message={err} type="error" />)}
+            {isLoading && (
+              <Spin tip="Loading...">
+                <Alert
+                  description="Module is loading"
+                  type="info"
+                />
+              </Spin>
+            )}
+            {isSubmitting && (
+              <Spin tip="Making Burritos!">
+                <Alert
+                  description="Sending burrito info"
+                  type="info"
+                />
+              </Spin>
+            )}
+          </Space>
+        </div>
       </Layout>
     </div>
   );
